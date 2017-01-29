@@ -112,12 +112,19 @@ public class Graph<V> {
 	}
 	
 	public double getDistanceBetween(V source, V end){
+		 double distance = Double.POSITIVE_INFINITY;
+
 		 for (Edge<V> edge : adjacencyList.get(source)) {
 			if (edge.getVertex() == end){
 				return edge.getWeight();
+			} else {
+				double nextVertexDistance = getDistanceBetween(edge.getVertex(), end);
+				if (nextVertexDistance + edge.getWeight() < distance) {
+					distance = nextVertexDistance + edge.getWeight();
+				}
 			}
 		}
-		return Double.POSITIVE_INFINITY;
+		return distance;
 	}
 	
 	public ArrayList<V> getVertexList() {
